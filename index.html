@@ -1,1 +1,48 @@
-
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Food Planner</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <nav>
+            <img src="./bibimbap.png" alt="food-icon" />
+            Sarita's Kitchen
+        </nav>
+        <form id="recipe-input-form" class="recipe-input-form-wrapper">
+            <div class="recipe-input-form">
+                <div class="form-group">
+                    <input name="weight" type="number" placeholder="Enter weight in Kg" class="form-control" required value="57"/>
+                </div>
+                <div class="form-group">
+                    <input name="height" type="number" placeholder="Enter height in cm" class="form-control" required value="165"/>
+                </div>
+                <div class="form-group">
+                    <input name="age" type="number" placeholder="Enter age" class="form-control" required value="29"/>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" required name="gender">
+                        <option disabled >Gender</option>
+                        <option value="male" selected> Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" required name="activity">
+                        <option disabled selected>Activity</option>
+                        <option value="light" >light</option>
+                        <option value="moderate" >moderate</option>
+                        <option value="active" selected>active</option>
+                    </select>
+                </div>
+            </div>
+            <div class="recipe-form-button">
+                <button type="submit" class="btn btn-default" >Generate meal</button>
+            </div>
+        </form>
+        <div class="recipies" id="recipies"></div>
+        <div class="recipe-details"></div>
+    </body>
+    <script src="./App.js"></script>
+</html>

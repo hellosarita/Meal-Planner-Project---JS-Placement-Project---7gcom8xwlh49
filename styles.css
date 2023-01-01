@@ -1,1 +1,112 @@
+html, body {
+    margin: 0;
+}
+
+nav {
+    background-color: rgb(255, 106, 0);
+    padding: 0.5rem 2rem;
+    color: rgb(255 255 255);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    font-style: italic;
+}
+
+nav img {
+    height: 55px;
+}
+
+.recipe-input-form {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
+    row-gap: 3rem;
+    margin: 5rem 10rem;
+    margin-bottom: 0;
+}
+
+.recipe-input-form .form-group {
+    width: 30%;
+    padding: 1rem 5rem;
+}
+
+.form-control {
+    border-radius: 10px;
+    background-color: rgb(211 211 211);
+    text-align: center;
+    height: 44px;
+    color: black;
+}
+
+.recipe-form-button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.recipe-form-button button {
+    background-color: rgb(255, 106, 0);
+    color: #FFFFFF;
+    border: 0 !important;
+    border-radius: 10px;
+    padding: 1rem 3rem;
+    font-size: 16px;
+    outline: none !important;
+}
+
+.recipies {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5rem;
+    padding: 4rem 0;
+}
+
+.recipie {
+    width: 20%;
+}
+
+h1, h2, h3 {
+    margin-top: unset;
+}
+
+.recipie-card {
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.recipie-moment {
+    text-align: center;
+    color: rgb(255, 106, 0);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.recipie-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.recipie-detail {
+    background-color: rgb(255, 106, 0);
+    color: #FFFFFF;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.card-images {
+    width: 100%;
+}
+
+.recipe-details {
+
+}
 
