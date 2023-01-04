@@ -10,21 +10,22 @@
             <img src="./bibimbap.png" alt="food-icon" />
             Sarita's Kitchen
         </nav>
+        <div class="container">
         <form id="recipe-input-form" class="recipe-input-form-wrapper">
             <div class="recipe-input-form">
                 <div class="form-group">
-                    <input name="weight" type="number" placeholder="Enter weight in Kg" class="form-control" required value="57"/>
+                    <input name="weight" type="number" placeholder="Enter weight in Kg" class="form-control" required />
                 </div>
                 <div class="form-group">
-                    <input name="height" type="number" placeholder="Enter height in cm" class="form-control" required value="165"/>
+                    <input name="height" type="number" placeholder="Enter height in cm" class="form-control" required />
                 </div>
                 <div class="form-group">
-                    <input name="age" type="number" placeholder="Enter age" class="form-control" required value="29"/>
+                    <input name="age" type="number" placeholder="Enter age" class="form-control" required />
                 </div>
                 <div class="form-group">
                     <select class="form-control" required name="gender">
-                        <option disabled >Gender</option>
-                        <option value="male" selected> Male</option>
+                        <option disabled selected>Gender</option>
+                        <option value="male"> Male</option>
                         <option value="female">Female</option>
                     </select>
                 </div>
@@ -33,7 +34,7 @@
                         <option disabled selected>Activity</option>
                         <option value="light" >light</option>
                         <option value="moderate" >moderate</option>
-                        <option value="active" selected>active</option>
+                        <option value="active" >active</option>
                     </select>
                 </div>
             </div>
@@ -42,7 +43,21 @@
             </div>
         </form>
         <div class="recipies" id="recipies"></div>
-        <div class="recipe-details"></div>
+        <div class="recipe-details" style="display: none;" id="recipe-details">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#ingredients">INGREDIENTS</a></li>
+                <li><a data-toggle="tab" href="#steps">STEPS</a></li>
+                <li><a data-toggle="tab" href="#equipment">EQUIPMENT</a></li>
+            </ul>            
+            <div class="tab-content">
+                <div id="ingredients" class="tab-pane fade in active"></div>
+                <div id="steps" class="tab-pane fade"></div>
+                <div id="equipment" class="tab-pane fade"></div>
+            </div>
+        </div>
+    </div>
     </body>
     <script src="./App.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </html>

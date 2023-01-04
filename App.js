@@ -1,7 +1,8 @@
 var MealPlanner = {
     meals: [],
     nutrients: {},
-    recipiesContainer: document.getElementById("recipies")
+    recipiesContainer: document.getElementById("recipies"),
+    recipeDetails: document.getElementById("recipe-details")
 }
 var getRecipies = (event) => {
     // get Receipes
@@ -59,7 +60,7 @@ var getRecipeListCard = (recipe, index) => {
             <div class="recipie-detail">
                 <h3>${recipe.title}</h3>
                 <p>Calories - 300</p>
-                <button class="btn" data-recipe-id="${recipe.id}">
+                <button class="btn btn-recipe" data-recipe-id="${recipe.id}">
                     Get Recipe
                 </button>
             </div>
@@ -72,9 +73,58 @@ var renderRecipes = (result) => {
     MealPlanner.nutrients = result.nutrients
     let htmlContent = MealPlanner.meals.map((meal, index) => getRecipeListCard(meal, index)).join("")
     MealPlanner.recipiesContainer.innerHTML = htmlContent
+    var btns = document.getElementsByClassName("btn-recipe")
+    Array.from(btns).forEach(element => {
+        element.addEventListener("click", getRecipe)
+    });
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
     const form = document.getElementById("recipe-input-form")
     form.addEventListener("submit", getRecipies)
+});
+
+var getRecipe = (event) => {
+    const url = `https://api.spoonacular.com/recipes/${event.target.dataset.recipeId}/information?apiKey=0adeda532af84a148480f5b2a623f963`
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    fetch(url, requestOptions)
+    .then(res => res.json())
+    .then(renderRecipe)
+}
+
+var renderRecipe = (response) => {
+    // Render here
+    //MealPlanner.recipeDetails
+    MealPlanner.recipeDetails.querySelector("#ingredients").innerHTML = "<ol>" + response.extendedIngredients.map(ingredient => `<li>
+        <div class="tab-row">
+            <div class="row-label">${ingredient.name}</div>
+            <div class="row-value">${ingredient.measures.us.amount + " " + ingredient.measures.us.unitShort}</div>
+        </div>
+    </li>`).join("") + "</ol>" 
+    MealPlanner.recipeDetails.querySelector("#steps").innerHTML = response.instructions
+
+    let equipments = []
+    response.analyzedInstructions.forEach(analyzedInstruction => {
+        analyzedInstruction.steps.forEach(step => {
+            equipments = equipments.concat(step.equipment.map(equipment => equipment.name))
+        })
+    })
+
+    equipments = Array.from(new Set(equipments))
+    MealPlanner.recipeDetails.querySelector("#equipment").innerHTML = "<ol>" + equipments.map(equipment => `<li>
+        <div class="tab-row">
+            ${equipment}
+        </div>
+    </li>`).join("") + "</ol>"
+
+    MealPlanner.recipeDetails.style.display = ""
+}
+
+var btns = document.getElementsByClassName("btn-recipe")
+Array.from(btns).forEach(element => {
+    element.addEventListener("click", getRecipe)
 });

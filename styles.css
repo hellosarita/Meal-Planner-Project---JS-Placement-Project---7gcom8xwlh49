@@ -25,13 +25,17 @@ nav img {
     flex-wrap: wrap;
     column-gap: 1.5rem;
     row-gap: 3rem;
-    margin: 5rem 10rem;
+    margin: 1rem auto;
     margin-bottom: 0;
+}
+
+.container {
+    margin: 3rem auto;
 }
 
 .recipe-input-form .form-group {
     width: 30%;
-    padding: 1rem 5rem;
+    padding: 0rem 5rem;
 }
 
 .form-control {
@@ -64,10 +68,6 @@ nav img {
     justify-content: center;
     column-gap: 5rem;
     padding: 4rem 0;
-}
-
-.recipie {
-    width: 20%;
 }
 
 h1, h2, h3 {
@@ -106,7 +106,56 @@ h1, h2, h3 {
     width: 100%;
 }
 
-.recipe-details {
-
+.btn-recipe {
+    background-color: rgb(255, 106, 0);
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
 }
 
+.recipe-details {
+    background: rgb(235 232 230);
+    padding: 1rem 0;
+    min-height: 200px;
+}
+
+a {
+    color: rgb(255 0 0);
+    font-weight: 900;
+}
+
+.nav-tabs{
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-tabs>li>a {
+    font-size: 16px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    background-color: transparent;
+    border: 0;
+    font-size: 16px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: rgb(255 0 0);
+    font-size: 18px;
+}
+
+.tab-content {
+    padding: 2rem 5rem;
+}
+
+.tab-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    text-transform: capitalize;
+}
+
+.row-label {
+    font-weight: bold;
+}
