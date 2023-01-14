@@ -12,7 +12,7 @@ var getRecipies = (event) => {
         "targetCalories": calculateCalorie(event.target),
         "diet": "vegetarian",
         "exclude": "shellfish, olives",
-        apiKey: "0adeda532af84a148480f5b2a623f963"
+        apiKey: "3ce9298c607f4739a1349e61ece485fa"
     }
     var requestOptions = {
         method: 'GET',
@@ -51,36 +51,34 @@ var calculateBMR = (gender, weight, height, age) => {
 }
 
 var getRecipeListCard = (recipe, index) => {
-
-//    let nutrient = recipe.nutrition.nutrients[0]
-
     let moment = index == 0 ? "Breakfast" : index == 1 ? "Lunch" : "Dinner"
-    return `<div class="recipie">
-        <h2 class="recipie-moment">${moment}</h2>
+    let container = document.createElement("div")
+    container.classList.add("recipie")
+    container.innerHTML =  `<h2 class="recipie-moment">${moment}</h2>
         <div class="recipie-card">
-            <img src="${recipe.details.image}" class="card-images">
-            <div class="recipie-detail">
-                <h3>${recipe.title}</h3>
-                <p>Calories - 200</p>
-                <button class="btn btn-recipe" data-recipe-id="${recipe.id}" id="btn-recipe-${recipe.id}">
-                    Get Recipe
-                </button>
-            </div>
+        <img src="${recipe.details.image}" class="card-images">
+        <div class="recipie-detail">
+            <h3>${recipe.title}</h3>
+            <p>Calories - 200</p>
+            <button class="btn btn-recipe" data-recipe-id="${recipe.id}" id="btn-recipe-${recipe.id}">
+                Get Recipe
+            </button>
         </div>
     </div>`
+    return container
 }
 
 var renderRecipes = (result) => {
+
     MealPlanner.meals = result.meals
     MealPlanner.nutrients = result.nutrients
+    MealPlanner.recipeDetails.innerHTML = ""
     MealPlanner.recipiesContainer.innerHTML = ''
 
     MealPlanner.meals.forEach( async (meal, index) => {
         meal.details = await getRecipe(meal.id)
-        MealPlanner.recipiesContainer.innerHTML += getRecipeListCard(meal, index)
+        MealPlanner.recipiesContainer.append(getRecipeListCard(meal, index))
         var btn = document.getElementById(`btn-recipe-${meal.id}`)
-
-        
         btn.addEventListener("click", renderRecipe)
     })
 }
@@ -91,7 +89,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 var getRecipe = async (recipeId) => {
-    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=088c1697e7f541c5afa7dd5370ad8091`
+    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=3ce9298c607f4739a1349e61ece485fa`
     var requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -100,12 +98,15 @@ var getRecipe = async (recipeId) => {
 
     return fetch(url, requestOptions)
     .then(res => res.json())
+    .then(recipeId);
     
 }
 
 var renderRecipe = (event) => {
+    
     var mealFound = MealPlanner.meals.find(meal => meal.id == event.target.dataset.recipeId)
-    debugger;
+    console.log("click");
+    
     if (!mealFound) {
         return false;
     }
