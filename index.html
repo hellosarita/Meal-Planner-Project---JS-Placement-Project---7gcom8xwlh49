@@ -4,11 +4,21 @@
         <title>Food Planner</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="./styles.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+            Array.prototype.swap = function (x,y) {
+                var b = this[x];
+                this[x] = this[y];
+                this[y] = b;
+                return this;
+            }
+        </script>
     </head>
     <body>
         <nav>
             <img src="./bibimbap.png" alt="food-icon" />
-            Sarita's Kitchen
+            Meal Planner
         </nav>
         <div class="container">
         <form id="recipe-input-form" class="recipe-input-form-wrapper">
