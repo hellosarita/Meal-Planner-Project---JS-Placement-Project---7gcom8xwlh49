@@ -8,18 +8,17 @@ var getRecipies = (event) => {
     // get Receipes
     event.preventDefault()
     const payload = {
-        "addRecipeInformation": true,
-        "maxCalories": calculateCalorie(event.target),
-        "number": 3,
-        includeNutrition: true,
-        apiKey: "088c1697e7f541c5afa7dd5370ad8091"
+        "timeFrame": "day",
+        "targetCalories": calculateCalorie(event.target),
+        "diet": "vegetarian",
+        "exclude": "shellfish, olives",
+        apiKey: "0adeda532af84a148480f5b2a623f963"
     }
     var requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-
-    const url = "https://api.spoonacular.com/recipes/complexSearch?" + new URLSearchParams(payload).toString()
+    const url = "https://api.spoonacular.com/mealplanner/generate?" + new URLSearchParams(payload).toString()
 
     fetch(url, requestOptions)
     .then(response => response.json())
@@ -52,18 +51,18 @@ var calculateBMR = (gender, weight, height, age) => {
 }
 
 var getRecipeListCard = (recipe, index) => {
-    console.log(recipe)
-    let nutrient = recipe.nutrition.nutrients[0]
+
+//    let nutrient = recipe.nutrition.nutrients[0]
 
     let moment = index == 0 ? "Breakfast" : index == 1 ? "Lunch" : "Dinner"
     return `<div class="recipie">
         <h2 class="recipie-moment">${moment}</h2>
         <div class="recipie-card">
-            <img src="${recipe.image}" class="card-images">
+            <img src="${recipe.details.image}" class="card-images">
             <div class="recipie-detail">
                 <h3>${recipe.title}</h3>
-                <p>Calories - ${nutrient.amount.toFixed(2)} ${nutrient.unit}</p>
-                <button class="btn btn-recipe" data-recipe-id="${recipe.id}">
+                <p>Calories - 200</p>
+                <button class="btn btn-recipe" data-recipe-id="${recipe.id}" id="btn-recipe-${recipe.id}">
                     Get Recipe
                 </button>
             </div>
@@ -71,26 +70,19 @@ var getRecipeListCard = (recipe, index) => {
     </div>`
 }
 
-var renderRecipes = result => {
-    MealPlanner.meals = result.results
-    var breakIndex;
-    MealPlanner.meals.forEach((meal, index) => {
-        ["morning meal", "brunch", "breakfast"].forEach(tag => {
-            if (meal.dishTypes.includes(tag)) {
-                breakIndex = index
-            }
-        })
-    })
-    if (breakIndex) {
-        MealPlanner.meals.swap(breakIndex, 0)
-    }
+var renderRecipes = (result) => {
+    MealPlanner.meals = result.meals
+    MealPlanner.nutrients = result.nutrients
+    MealPlanner.recipiesContainer.innerHTML = ''
 
-    let htmlContent = MealPlanner.meals.map((meal, index) => getRecipeListCard(meal, index)).join("")
-    MealPlanner.recipiesContainer.innerHTML = htmlContent
-    var btns = document.getElementsByClassName("btn-recipe")
-    Array.from(btns).forEach(element => {
-        element.addEventListener("click", getRecipe)
-    });
+    MealPlanner.meals.forEach( async (meal, index) => {
+        meal.details = await getRecipe(meal.id)
+        MealPlanner.recipiesContainer.innerHTML += getRecipeListCard(meal, index)
+        var btn = document.getElementById(`btn-recipe-${meal.id}`)
+
+        
+        btn.addEventListener("click", renderRecipe)
+    })
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -98,19 +90,26 @@ document.addEventListener("DOMContentLoaded", (event) => {
     form.addEventListener("submit", getRecipies)
 });
 
-var getRecipe = (event) => {
-    const url = `https://api.spoonacular.com/recipes/${event.target.dataset.recipeId}/information?apiKey=088c1697e7f541c5afa7dd5370ad8091`
+var getRecipe = async (recipeId) => {
+    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=088c1697e7f541c5afa7dd5370ad8091`
     var requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
 
-    fetch(url, requestOptions)
+
+    return fetch(url, requestOptions)
     .then(res => res.json())
-    .then(renderRecipe)
+    
 }
 
-var renderRecipe = (response) => {
+var renderRecipe = (event) => {
+    var mealFound = MealPlanner.meals.find(meal => meal.id == event.target.dataset.recipeId)
+    debugger;
+    if (!mealFound) {
+        return false;
+    }
+    const response = mealFound.details;
     MealPlanner.recipeDetails.querySelector("#ingredients").innerHTML = "<ol>" + response.extendedIngredients.map(ingredient => `<li>
         <div class="tab-row">
             <div class="row-label">${ingredient.name}</div>
@@ -136,10 +135,8 @@ var renderRecipe = (response) => {
     MealPlanner.recipeDetails.style.display = ""
 }
 
-var btns = document.getElementsByClassName("btn-recipe")
-Array.from(btns).forEach(element => {
-    element.addEventListener("click", getRecipe)
-});
+
+
 //https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&maxCalories=1491.06375&number=3&includeNutrition=true&apiKey=088c1697e7f541c5afa7dd5370ad8091
 //https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&maxCalories=1611.5962499999998&number=3&includeNutrition=true&apiKey=088c1697e7f541c5afa7dd5370ad8091
 //https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&maxCalories=1816.7085&number=3&includeNutrition=true&apiKey=088c1697e7f541c5afa7dd5370ad8091
