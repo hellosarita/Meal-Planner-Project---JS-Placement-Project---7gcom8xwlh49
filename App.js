@@ -72,7 +72,6 @@ var renderRecipes = (result) => {
 
     MealPlanner.meals = result.meals
     MealPlanner.nutrients = result.nutrients
-    MealPlanner.recipeDetails.innerHTML = ""
     MealPlanner.recipiesContainer.innerHTML = ''
 
     MealPlanner.meals.forEach( async (meal, index) => {
@@ -117,6 +116,7 @@ var renderRecipe = (event) => {
             <div class="row-value">${ingredient.measures.us.amount + " " + ingredient.measures.us.unitShort}</div>
         </div>
     </li>`).join("") + "</ol>" 
+    MealPlanner.recipeDetails.style.display = " ";
     MealPlanner.recipeDetails.querySelector("#steps").innerHTML = response.instructions
 
     let equipments = []
