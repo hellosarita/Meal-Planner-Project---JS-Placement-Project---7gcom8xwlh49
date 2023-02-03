@@ -59,7 +59,7 @@ var getRecipeListCard = (recipe, index) => {
         <img src="${recipe.details.image}" class="card-images">
         <div class="recipie-detail">
             <h3>${recipe.title}</h3>
-            <p>Calories - 200</p>
+            <p>Calories ${MealPlanner.nutrients.calories}</p>
             <button class="btn btn-recipe" data-recipe-id="${recipe.id}" id="btn-recipe-${recipe.id}">
                 Get Recipe
             </button>
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     form.addEventListener("submit", getRecipies)
 });
 
-var getRecipe = async (recipeId) => {
+var getRecipe = (recipeId) => {
     const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=3ce9298c607f4739a1349e61ece485fa`
     var requestOptions = {
         method: 'GET',
